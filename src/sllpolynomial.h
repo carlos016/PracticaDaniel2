@@ -97,8 +97,11 @@ std::ostream& operator<<(std::ostream& os, const SllPolynomial& p) {
 // Evaluación de un polinomio representado por lista simple
 double SllPolynomial::Eval(const double x) const {
   double result{0.0};
-  // poner el código aquí
-
+  SllPolyNode* aux{get_head()};
+  while(aux != NULL){
+    result += aux->get_data().get_val() * pow(x, aux->get_data().get_inx());
+    aux = aux->get_next();
+  }
   return result;
 }
 
@@ -106,19 +109,75 @@ double SllPolynomial::Eval(const double x) const {
 bool SllPolynomial::IsEqual(const SllPolynomial& sllpol,
 			    const double eps) const {
   bool differents = false;
-  // poner el código aquí
+  int aux_size1{0};
+  int aux_size2{0};
+  SllPolyNode* aux{get_head()};
+  while(aux != NULL){
+    aux_size1++;
+    aux = aux->get_next();
+  }
+  aux = sllpol.get_head();
+  while(aux != NULL){
+    aux_size2++;
+    aux = aux->get_next();
+  }
+  if(aux_size1 != aux_size2){
+    differents = true;
+  }
+  else{
+    aux = get_head();
+    SllPolyNode* aux2{sllpol.get_head()};
+    while(aux != NULL && aux2 != NULL){
+      //inicializo valores de aux 1
+      double coef1{aux->get_data().get_val()};
+      int index1{aux->get_data().get_inx()};
+      //inicializo valores de aux 2
+      double coef2{aux->get_data().get_val()};
+      int index2{aux->get_data().get_inx()};
+
+      if(index1 == index2 && coef1 == coef2){
+        aux = aux->get_next();
+        aux2 = aux2->get_next();
+      }
+      else{
+        aux = NULL;
+        aux2 = NULL;
+        differents = true;
+      }
+    }
+  }
 
   return !differents;
 }
 
 // FASE IV
 // Generar nuevo polinomio suma del polinomio invocante mas otro polinomio
-void SllPolynomial::Sum(const SllPolynomial& sllpol,
-			SllPolynomial& sllpolsum,
-			const double eps) {
-  // poner el código aquí
+void SllPolynomial::Sum(const SllPolynomial& sllpol, SllPolynomial& sllpolsum, const double eps) {
 
+  SllPolyNode* aux{get_head()};
+  SllPolyNode* aux2{sllpol.get_head()};
+
+  SllPolynomial listaAux;
+
+  
+
+
+  while(aux != NULL && aux2 != NULL){
+    //aux2 = sllpol.get_head();
+    //while(aux2 != NULL){
+      if(aux->get_data().get_inx() == aux2->get_data().get_inx()){
+        pair_double_t pair_aux ((aux->get_data().get_val() + aux2->get_data().get_val()), aux->get_data().get_inx());
+        sllpolsum.push_front(new SllPolyNode (pair_aux));
+        //listaAux.push_front(new SllPolyNode (pair_aux));
+        aux = aux->get_next();
+        aux2 = sllpol.get_head();
+      }
+      else{
+          aux2 = aux2->get_next();
+      }
+    //}
+  }
+  //std::cout << "Mira aquí a ver la suma: " << /*sllpolsum*/listaAux << "\n\n\n";
 }
-
 
 #endif  // SLLPOLYNOMIAL_H_
