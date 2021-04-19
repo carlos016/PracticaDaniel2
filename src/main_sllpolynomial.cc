@@ -1,11 +1,11 @@
-// AUTOR: 
-// FECHA: 
-// EMAIL: 
+// AUTOR:
+// FECHA:
+// EMAIL:
 // VERSION: 1.0
 // ASIGNATURA: Algoritmos y Estructuras de Datos
 // PRÁCTICA Nº: 4
 // ESTILO: Google C++ Style Guide
-// COMENTARIOS: 
+// COMENTARIOS:
 // COMPILACIÓN: g++ -g main_sllpolynomial.cc -o main_sllpolynomial
 // EJECUCIÓN: ./main_sllpolynomial < data_sllpolynomial.txt
 
@@ -23,6 +23,8 @@ int main()
   cout << "v2= " << v2;
   cout << "v3= " << v3;
   cout << endl;
+
+  cout << "\nAquí empieza la locura en el main: \n";
 
   // Fase II
   SllPolynomial sllp1(v1), sllp2(v2), sllp3(v3);

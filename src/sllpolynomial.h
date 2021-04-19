@@ -1,12 +1,12 @@
-// AUTOR: 
-// FECHA: 
-// EMAIL: 
+// AUTOR:
+// FECHA:
+// EMAIL:
 // VERSION: 2.0
 // ASIGNATURA: Algoritmos y Estructuras de Datos
 // PRÁCTICA Nº: 4
 // ESTILO: Google C++ Style Guide
 // COMENTARIOS:
-// 
+//
 
 #ifndef SLLPOLYNOMIAL_H_
 #define SLLPOLYNOMIAL_H_
@@ -35,7 +35,7 @@ class SllPolynomial : public sll_t<pair_double_t> {
 
   // E/S
   void Write(std::ostream& = std::cout) const;
-  
+
   // operaciones
   double Eval(const double) const;
   bool IsEqual(const SllPolynomial&, const double = EPS) const;
@@ -50,8 +50,43 @@ bool IsNotZero(const double val, const double eps = EPS) {
 // FASE II
 // constructor
 SllPolynomial::SllPolynomial(const vector_t<double>& v, const double eps) {
-  // poner el código aquí
-  
+
+  std::cout << "\n\n\nAqui empieza el constructor odioso:\n\n\n";
+
+  vector_t<pair_double_t> paresAux(v.get_size());
+  vector_t<SllPolyNode> nodosAux(v.get_size());
+
+/*  pair_double_t parAux;
+  //SllPolyNode nodoAux(parAux);
+  SllPolyNode nodoAux;
+
+  sll_t<pair_double_t> listaAux;
+*/
+  for(int i{0}; i < v.get_size(); i++){
+    /*std::cout << "\nIteración " << i << ": \n";
+    parAux.set(v[i], i);
+    std::cout << "Par rellenado: " << parAux << "\n";
+    nodoAux.set_data(parAux);
+    std::cout << "Nodo rellenado: ";
+    nodoAux.write(std::cout);
+    std::cout << "\n";*/
+
+    std::cout << "\nIteración " << i << ": \n";
+    paresAux[i].set(v[i], i);
+    std::cout << "Pares rellenado: " << paresAux << "\n";
+    nodosAux[i].set_data(paresAux[i]);
+    std::cout << "Nodos rellenado: ";
+    nodosAux[i].write(std::cout);
+    std::cout << "\n";
+
+    //push_front(&nodoAux);
+    push_front(&nodosAux[i]);
+    //listaAux.push_front(nodoAux);
+  }
+  std::cout << "\nAquí está la lista rellena: ";
+  //listaAux.write(std::cout);
+  std::cout << "\n";
+  std::cout << "\n\n\nAqui termina el constructor odioso\n\n\n";
 }
 
 
@@ -89,7 +124,7 @@ std::ostream& operator<<(std::ostream& os, const SllPolynomial& p) {
 double SllPolynomial::Eval(const double x) const {
   double result{0.0};
   // poner el código aquí
-  
+
   return result;
 }
 
