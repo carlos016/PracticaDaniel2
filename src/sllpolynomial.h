@@ -186,13 +186,16 @@ void SllPolynomial::Sum(const SllPolynomial& sllpol, SllPolynomial& sllpolsum, c
     aux2 = aux2->get_next();
   }
 
-  //Realizamos la suma
+  //Realizamos la suma de los elementos con igual indice
   bool introducido = false;
   for(int i{0}; i < vectorSll.get_size(); i++){
+    introducido = false;
     for(int j{0}; j < vectorSll2.get_size(); j++){
       if(vectorSll[i].get_inx() == vectorSll2[j].get_inx()){
-        pair_double_t parAux(vectorSll[i].get_val() + vectorSll2[j].get_val(), vectorSll[i].get_inx());
-        sllpolsum.push_front(new SllPolyNode (parAux));
+        //if(IsNotZero(vectorSll[i].get_val() + vectorSll2[j].get_val(), eps)){
+          pair_double_t parAux(vectorSll[i].get_val() + vectorSll2[j].get_val(), vectorSll[i].get_inx());
+          sllpolsum.push_front(new SllPolyNode (parAux));
+      //  }
         introducido = true;
       }
     }
@@ -201,7 +204,7 @@ void SllPolynomial::Sum(const SllPolynomial& sllpol, SllPolynomial& sllpolsum, c
       sllpolsum.push_front(new SllPolyNode (parAux));
     }
   }
-
+  //introducimos los elementos que no tienen igual indice
   introducido = false;
   int indice = -1;
   SllPolyNode* aux3 = sllpolsum.get_head();
@@ -216,29 +219,11 @@ void SllPolynomial::Sum(const SllPolynomial& sllpol, SllPolynomial& sllpolsum, c
       aux3 = aux3->get_next();
     }
     if(!introducido){
-      pair_double_t parAux(vectorSll2[indice].get_val(), vectorSll2[indice].get_inx());
+      pair_double_t parAux(vectorSll2[i].get_val(), vectorSll2[i].get_inx());
       sllpolsum.push_front(new SllPolyNode (parAux));
     }
     aux3 = sllpolsum.get_head();
   }
-
-  /*introducido = false;
-  int indice = -1;
-  SllPolyNode* aux3 = sllpolsum.get_head();
-  while(aux3 != NULL){
-    introducido = false;
-    for(int i{0}; i < vectorSll2.get_size(); i++){
-      if(aux3->get_data().get_inx() == vectorSll2[i].get_inx()){
-        introducido = true;
-        indice = i;
-      }
-    }
-    if(!introducido){
-      pair_double_t parAux(vectorSll2[indice].get_val(), vectorSll2[indice].get_inx());
-      sllpolsum.push_front(new SllPolyNode (parAux));
-    }
-    aux3 = aux3->get_next();
-  }*/
 
 }
 
