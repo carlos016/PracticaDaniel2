@@ -193,10 +193,8 @@ void SllPolynomial::Sum(const SllPolynomial& sllpol, SllPolynomial& sllpolsum, c
     introducido = false;
     for(int j{0}; j < vectorSll2.get_size(); j++){
       if(vectorSll[i].get_inx() == vectorSll2[j].get_inx()){
-        //if(IsNotZero(vectorSll[i].get_val() + vectorSll2[j].get_val(), eps)){
-          pair_double_t parAux(vectorSll[i].get_val() + vectorSll2[j].get_val(), vectorSll[i].get_inx());
-          listaAux.push_front(new SllPolyNode (parAux));
-      //  }
+        pair_double_t parAux(vectorSll[i].get_val() + vectorSll2[j].get_val(), vectorSll[i].get_inx());
+        listaAux.push_front(new SllPolyNode (parAux));
         introducido = true;
       }
     }
@@ -233,9 +231,7 @@ void SllPolynomial::Sum(const SllPolynomial& sllpol, SllPolynomial& sllpolsum, c
     if(IsNotZero(nodoAux.get_val(), eps)){
       sllpolsum.push_front(new SllPolyNode (nodoAux));
     }
-
   }
-
 }
 
 #endif  // SLLPOLYNOMIAL_H_
