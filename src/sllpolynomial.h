@@ -153,7 +153,43 @@ bool SllPolynomial::IsEqual(const SllPolynomial& sllpol,
 // FASE IV
 // Generar nuevo polinomio suma del polinomio invocante mas otro polinomio
 void SllPolynomial::Sum(const SllPolynomial& sllpol, SllPolynomial& sllpolsum, const double eps) {
+
   SllPolyNode* aux{get_head()};
+  SllPolyNode* aux2{sllpol.get_head()}
+  int contadorAux{0};
+  int contadorAux2{0};
+
+  while (aux != NULL){
+    contadorAux++;
+    aux = aux->get_next();
+  }
+
+  while (aux2 != NULL){
+    contadorAux2++;
+    aux2 = aux2->get_next();
+  }
+
+  vector_t<pair_t<double> > vectorSll(contadorAux);
+  vector_t<pair_t<double> > vectorSll2(contadorAux2);
+
+  aux = get_head();
+  for(int i{0}; i < vectorSll.get_size(); i++){
+    vectorSll[i] = new pair_t(aux->get_data().get_val(), aux->get_data().get_val());
+    aux = aux->get_next();
+  }
+
+  aux2 = sllpol.get_head();
+  for(int i{0}; i < vectorSll2.get_size(); i++){
+    vectorSll2[i] = new pair_t(aux2->get_data().get_val(), aux2->get_data().get_val());
+    aux2 = aux2->get_next();
+  }
+
+  std::cout << "MIRA A VER AQUI: "<< vectorSll << "\nYATA\n\n\n";
+  /*while (aux != NULL){
+
+  }*/
+
+  /*SllPolyNode* aux{get_head()};
   SllPolyNode* aux2{sllpol.get_head()};
 
   //SllPolynomial listaAux;
@@ -176,7 +212,7 @@ void SllPolynomial::Sum(const SllPolynomial& sllpol, SllPolynomial& sllpolsum, c
       }
     //}
   }
-  std::cout << "Mira aquí a ver la suma: "; /*<< sllpolsum listaAux << "\n\n\n";*/
+  std::cout << "Mira aquí a ver la suma: "; /*<< sllpolsum listaAux << "\n\n\n";
   listaNodoAux.write(std::cout);
   std::cout << "\n\n\n";
 
