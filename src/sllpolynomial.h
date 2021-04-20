@@ -156,6 +156,7 @@ void SllPolynomial::Sum(const SllPolynomial& sllpol, SllPolynomial& sllpolsum, c
 
   SllPolyNode* aux{get_head()};
   SllPolyNode* aux2{sllpol.get_head()};
+  SllPolynomial listaAux;
   int contadorAux{0};
   int contadorAux2{0};
   //Contamos la cantidad de elementos de cada lista
@@ -194,20 +195,20 @@ void SllPolynomial::Sum(const SllPolynomial& sllpol, SllPolynomial& sllpolsum, c
       if(vectorSll[i].get_inx() == vectorSll2[j].get_inx()){
         //if(IsNotZero(vectorSll[i].get_val() + vectorSll2[j].get_val(), eps)){
           pair_double_t parAux(vectorSll[i].get_val() + vectorSll2[j].get_val(), vectorSll[i].get_inx());
-          sllpolsum.push_front(new SllPolyNode (parAux));
+          listaAux.push_front(new SllPolyNode (parAux));
       //  }
         introducido = true;
       }
     }
     if(!introducido){
       pair_double_t parAux(vectorSll[i].get_val(), vectorSll[i].get_inx());
-      sllpolsum.push_front(new SllPolyNode (parAux));
+      listaAux.push_front(new SllPolyNode (parAux));
     }
   }
   //introducimos los elementos que no tienen igual indice
   introducido = false;
   int indice = -1;
-  SllPolyNode* aux3 = sllpolsum.get_head();
+  SllPolyNode* aux3 = listaAux.get_head();
 
   for(int i{0}; i < vectorSll2.get_size(); i++){
     introducido = false;
@@ -220,9 +221,19 @@ void SllPolynomial::Sum(const SllPolynomial& sllpol, SllPolynomial& sllpolsum, c
     }
     if(!introducido){
       pair_double_t parAux(vectorSll2[i].get_val(), vectorSll2[i].get_inx());
-      sllpolsum.push_front(new SllPolyNode (parAux));
+      listaAux.push_front(new SllPolyNode (parAux));
     }
-    aux3 = sllpolsum.get_head();
+    aux3 = listaAux.get_head();
+  }
+
+  //Quitamos los ceros resultantes
+  aux3 = listaAux.get_head();
+  while(!listaAux.empty()){
+    pair_t<double> nodoAux = listaAux.pop_front()->get_data();
+    if(IsNotZero(nodoAux.get_val(), eps)){
+      sllpolsum.push_front(new SllPolyNode (nodoAux));
+    }
+
   }
 
 }
