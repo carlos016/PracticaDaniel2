@@ -24,13 +24,9 @@ int main()
   cout << "v3= " << v3;
   cout << endl;
 
-  cout << "\nAquí empieza la locura en el main: \n";
-
   // Fase II
   SllPolynomial sllp1(v1);
-  //cout << "sllp1= " << sllp1;
   SllPolynomial sllp2(v2);
-  //cout << "sllp2= " << sllp2;
   SllPolynomial sllp3(v3);
   cout << "sllp1= " << sllp1;
   cout << "sllp2= " << sllp2;
@@ -78,12 +74,6 @@ int main()
   cout << "sllp1 + sllp2= " << sllpsum12;
   sllp2.Sum(sllp3, sllpsum23);
   cout << "sllp2 + sllp3= " << sllpsum23;
-
-
-
-  /*cout << "sllp1= " << sllp1;
-  cout << "sllp2= " << sllp2;
-  cout << "sllp3= " << sllp3;*/
 
   return 0;
 }
