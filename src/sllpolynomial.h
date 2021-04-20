@@ -155,10 +155,10 @@ bool SllPolynomial::IsEqual(const SllPolynomial& sllpol,
 void SllPolynomial::Sum(const SllPolynomial& sllpol, SllPolynomial& sllpolsum, const double eps) {
 
   SllPolyNode* aux{get_head()};
-  SllPolyNode* aux2{sllpol.get_head()}
+  SllPolyNode* aux2{sllpol.get_head()};
   int contadorAux{0};
   int contadorAux2{0};
-
+  //Contamos la cantidad de elementos de cada lista
   while (aux != NULL){
     contadorAux++;
     aux = aux->get_next();
@@ -168,98 +168,78 @@ void SllPolynomial::Sum(const SllPolynomial& sllpol, SllPolynomial& sllpolsum, c
     contadorAux2++;
     aux2 = aux2->get_next();
   }
-
+  //Creamos los vectores donde se almacenaran los elementos de la lista
   vector_t<pair_t<double> > vectorSll(contadorAux);
   vector_t<pair_t<double> > vectorSll2(contadorAux2);
-
+  //Rellenamos los vectores
   aux = get_head();
   for(int i{0}; i < vectorSll.get_size(); i++){
-    vectorSll[i] = new pair_t(aux->get_data().get_val(), aux->get_data().get_val());
+    pair_t<double> parAux (aux->get_data().get_val(), aux->get_data().get_inx());
+    vectorSll[i] = parAux;
     aux = aux->get_next();
   }
 
   aux2 = sllpol.get_head();
   for(int i{0}; i < vectorSll2.get_size(); i++){
-    vectorSll2[i] = new pair_t(aux2->get_data().get_val(), aux2->get_data().get_val());
+    pair_t<double> parAux2 (aux2->get_data().get_val(), aux2->get_data().get_inx());
+    vectorSll2[i] = parAux2;
     aux2 = aux2->get_next();
   }
 
-  std::cout << "MIRA A VER AQUI: "<< vectorSll << "\nYATA\n\n\n";
-  /*while (aux != NULL){
-
-  }*/
-
-  /*SllPolyNode* aux{get_head()};
-  SllPolyNode* aux2{sllpol.get_head()};
-
-  //SllPolynomial listaAux;
-
-  sll_t<int> listaNodoAux;
-  //Se suman de la lista los que tienen el mismo indice
-  while(aux != NULL && aux2 != NULL){
-    //aux2 = sllpol.get_head();
-    //while(aux2 != NULL){
-      if(aux->get_data().get_inx() == aux2->get_data().get_inx()){
-        pair_double_t pair_aux ((aux->get_data().get_val() + aux2->get_data().get_val()), aux->get_data().get_inx());
-        sllpolsum.push_front(new SllPolyNode (pair_aux));
-        listaNodoAux.push_front(new sll_node_t<int> (aux->get_data().get_inx()));
-        //listaAux.push_front(new SllPolyNode (pair_aux));
-        aux = aux->get_next();
-        aux2 = sllpol.get_head();
-      }
-      else{
-        aux2 = aux2->get_next();
-      }
-    //}
-  }
-  std::cout << "Mira aquí a ver la suma: "; /*<< sllpolsum listaAux << "\n\n\n";
-  listaNodoAux.write(std::cout);
-  std::cout << "\n\n\n";
-
-  sll_node_t<int>* puntNodoAux{listaNodoAux.get_head()};
-  int contador = 0;
-  //Se cuentan los nodos que se han sumado ya
-  while (puntNodoAux != NULL){
-    contador++;
-    puntNodoAux = puntNodoAux->get_next();
-  }
-  //Se guarda un vector con los nodos que han sido sumados y añadidos
-  vector_t<int> vectorNodoAux(contador);
-  puntNodoAux = listaNodoAux.get_head();
-  for(int i{0}; i < vectorNodoAux.get_size(); i++){
-    vectorNodoAux[i] = listaNodoAux.pop_front()->get_data();
-  }
-  //std::cout << "LKOOOOOOO: " << vectorNodoAux;
-
-  aux = get_head();
-  aux2 = sllpol.get_head();
-
-  /*while(aux != NULL && aux2 != NULL){
-    for(int i{0}; i < vectorNodoAux.get_size(); i++){
-      if(aux->get_data().get_inx() == vectorNodoAux[i]){
-        sllpolsum.push_front(new SllPolyNode (pair_double_t (aux->get_data().get_val(), aux->get_data().get_inx())));
-      }
-
-      if(aux2->get_data().get_inx() == vectorNodoAux[i]){
-        sllpolsum.push_front(new SllPolyNode (pair_double_t (aux2->get_data().get_val(), aux2->get_data().get_inx())));
+  //Realizamos la suma
+  bool introducido = false;
+  for(int i{0}; i < vectorSll.get_size(); i++){
+    for(int j{0}; j < vectorSll2.get_size(); j++){
+      if(vectorSll[i].get_inx() == vectorSll2[j].get_inx()){
+        pair_double_t parAux(vectorSll[i].get_val() + vectorSll2[j].get_val(), vectorSll[i].get_inx());
+        sllpolsum.push_front(new SllPolyNode (parAux));
+        introducido = true;
       }
     }
-    aux = aux->get_next();
-    aux2 = aux2->get_next();
-  }*/
+    if(!introducido){
+      pair_double_t parAux(vectorSll[i].get_val(), vectorSll[i].get_inx());
+      sllpolsum.push_front(new SllPolyNode (parAux));
+    }
+  }
 
-    /*for(int i{0}; i < vectorNodoAux.get_size(); i++){
-      if(puntNodoAux->get_data() == ){
+  introducido = false;
+  int indice = -1;
+  SllPolyNode* aux3 = sllpolsum.get_head();
 
+  for(int i{0}; i < vectorSll2.get_size(); i++){
+    introducido = false;
+    while(aux3 != NULL){
+      if(aux3->get_data().get_inx() == vectorSll2[i].get_inx()){
+        introducido = true;
+        indice = i;
+      }
+      aux3 = aux3->get_next();
+    }
+    if(!introducido){
+      pair_double_t parAux(vectorSll2[indice].get_val(), vectorSll2[indice].get_inx());
+      sllpolsum.push_front(new SllPolyNode (parAux));
+    }
+    aux3 = sllpolsum.get_head();
+  }
+
+  /*introducido = false;
+  int indice = -1;
+  SllPolyNode* aux3 = sllpolsum.get_head();
+  while(aux3 != NULL){
+    introducido = false;
+    for(int i{0}; i < vectorSll2.get_size(); i++){
+      if(aux3->get_data().get_inx() == vectorSll2[i].get_inx()){
+        introducido = true;
+        indice = i;
       }
     }
-    puntNodoAux = puntNodoAux->get_next();
+    if(!introducido){
+      pair_double_t parAux(vectorSll2[indice].get_val(), vectorSll2[indice].get_inx());
+      sllpolsum.push_front(new SllPolyNode (parAux));
+    }
+    aux3 = aux3->get_next();
   }*/
 
-  //while(aux != NULL && aux2 != NULL){
-    //for(int i{0} i < )
-    //if(aux->get_da
-  //}
 }
 
 #endif  // SLLPOLYNOMIAL_H_
